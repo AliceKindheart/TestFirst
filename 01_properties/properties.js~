@@ -1,8 +1,0 @@
- function setSomePropertiesOn(x, y, onePlus){ 
-  this.x = 7;
-  this.y = "8";
-  this.oneplus = function(z) {
-    return (z+1);
-  };		
-}
-
