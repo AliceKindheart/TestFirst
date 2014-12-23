@@ -28,17 +28,7 @@ var map = function(arr, fnct){
 var filter = function(arr, fnct){
     var answer=[];
     for (var i=0; i<arr.length; i++){
-        if (fnct(arr[i]===true)){
-            answer.push(fnct(arr[i]));
-        }
-    }
-    return answer;
-};
-
-var filter = function(arr, fnct){
-    var answer=[];
-    for (var i=0; i<arr.length; i++){
-        if ( fnct( arr[i] ) ){
+        if (fnct(arr[i])===true){
             answer.push(arr[i]);
         }
     }
@@ -65,26 +55,31 @@ var contains =  function(arr,x){
     
 };
 
-var reduce = function(arr,x,fnct){
-    
-    if (typeof arr[0] == "string"){
-        var total = 0;
-        for (var i=x; i<arr.length; i++){
-            total+=fnct(arr[1]);
+var reduce =  function(arr, x, fnct){
+    if (isNaN(arr[0])===false){
+        for (var i=x; i<arr.length-1; i++){
+            arr[i+1]+=arr[i];
+        }
+        return arr[arr.length-1];
+    } else {
+        var total =0;
+        for (var j=x; j<arr.length; j++){
+            total+=countWords(arr[j]);
         }
         return total;
     }
-    
-    if (arr.length==x+1){
-        return arr[x];
-    } else {
-        var temp = fnct(arr[x],arr[x+1]);
-        arr.shift();
-        arr.shift();
-        arr.push(temp);
-        reduce(arr,x,fnct);
-    }
-   
+};
+var add = function(a, b) { 
+       return a+b; 
+     }; 
+     
+var countWordsInReduce = function(str){
+    var words = str.split(" ");
+    return words.length;
+};
+
+var sum =  function(arr){
+  return reduce(arr,0,sum);   
 };
 
 var every = function (arr,fnct) {
@@ -140,16 +135,20 @@ var any = function (arr) {
 };
 
 
+
+
 var once = function(fnct){
-    var num = 0;
-    var random = true  ;  
+  var runOnce =  false;  
+  return function(){
+      if (runOnce===false){
+          fnct();
+      }
+      runOnce =  true;
+    };
+  };
     
-    if (random===true){
-        num++;
-    }
-    random = false;
-     
-};
+var num =0;     
 var increment = once(function() { 
        num++; 
      }); 
+     
